@@ -68,6 +68,10 @@ h1, h2, h3 { text-wrap: balance; }
 .brand h1 { margin: 0; font-family: var(--f-display); font-weight: 800; font-size: 1.35rem; line-height: 1.4; letter-spacing: 0; }
 .brand h1 small { font-family: var(--f-body); font-weight: 500; font-size: .8rem; color: var(--ink-2); margin-inline-start: 8px; }
 .brand .meta { font-size: .8rem; color: var(--ink-2); font-variant-numeric: tabular-nums; }
+.xnav { margin: 0 0 6px; font-size: .82rem; color: var(--ink-2); }
+.xnav:empty { display: none; }
+.xnav a { color: var(--accent); font-weight: 600; text-decoration: none; }
+.xnav a:hover { text-decoration: underline; }
 .tabs { display: flex; gap: 2px; overflow-x: auto; scrollbar-width: none; }
 .tabs button { flex: 1 0 auto; background: none; border: 0; padding: 8px 12px 10px; font-weight: 600; font-size: .95rem; color: var(--ink-2); cursor: pointer; border-bottom: 3px solid transparent; white-space: nowrap; }
 .tabs button[aria-selected="true"] { color: var(--ink); border-bottom-color: var(--accent); }
@@ -251,6 +255,7 @@ details.daycard > summary { cursor: pointer; font-weight: 600; color: var(--acce
         <h1>تدريب اختبار فال <small>الاختبار الشامل · المستوى التأسيسي للوساطة العقارية</small></h1>
         <div class="meta" id="bank-meta"></div>
       </div>
+      <p class="xnav">اختبارات أخرى: <a href="fm/">تدريب اختبار إدارة المرافق ←</a></p>
       <nav class="tabs" role="tablist" aria-label="الأقسام">
         <button role="tab" id="t-notes" aria-selected="true" data-view="notes">الملخصات</button>
         <button role="tab" id="t-practice" aria-selected="false" data-view="practice">تدريب</button>
@@ -627,7 +632,7 @@ details.daycard > summary { cursor: pointer; font-weight: 600; color: var(--acce
     var verdict = pct >= 85 ? ['جاهز — حافظ على هذا المستوى', 'var(--ok)'] : pct >= 70 ? ['قريب — راجع أخطاءك وفقرات «فخ»', 'var(--flag)'] : ['تحتاج مراجعة مركزة للملخصات قبل محاولة أخرى', 'var(--bad)'];
     var filtered = rows.filter(function (r) { return reviewFilter === 'all' ? true : reviewFilter === 'wrong' ? (!r.ok) : reviewFilter === 'flag' ? r.flag : true; });
     root.innerHTML = '<div class="panel"><div class="score"><div class="big">' + score + '<span>/' + n + '</span></div><div><div class="verdict" style="color:' + verdict[1] + '">' + pct + '% · ' + verdict[0] + '</div>' +
-      '<div class="small muted">الوقت المستخدم ' + fmt(sec) + ' من 45:00 · لم تُجب عن ' + rows.filter(function (r) { return r.a === null; }).length + '</div></div></div>' +
+      '<div class="small muted">الوقت المستخدم ' + fmt(sec) + ' من ' + fmt(DURATION / 1000) + ' · لم تُجب عن ' + rows.filter(function (r) { return r.a === null; }).length + '</div></div></div>' +
       '<div class="bycourse">' + CORDER.filter(function (c) { return by[c]; }).map(function (c) { var v = by[c]; return '<div class="r c-' + c + '"><span>' + CN[c] + '</span><span class="bar"><i style="width:' + Math.round(100 * v[0] / v[1]) + '%"></i></span><span class="v">' + v[0] + '/' + v[1] + '</span></div>'; }).join('') + '</div>' +
       '<div class="row" style="margin-top:14px"><button class="btn" id="m-new">اختبار جديد</button><button class="btn quiet" id="m-mis">تدرّب على أخطائي</button></div></div>' +
       '<div class="row" style="margin-top:18px"><span class="label">مراجعة الإجابات</span><div class="seg" id="rf">' +
